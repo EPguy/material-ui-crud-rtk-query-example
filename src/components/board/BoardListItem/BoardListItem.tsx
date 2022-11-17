@@ -1,19 +1,23 @@
 import {useMemo} from "react";
-import {useGetBoardListQuery} from "../../../api/board/api";
+import useBoard from "../../../hooks/useBoard";
 
 const BoardListItem = () => {
-    const { data, isLoading } = useGetBoardListQuery(null);
+    const { boardList, loading, deleteBoard, updateBoard } = useBoard();
     return useMemo(() => (
         <>
             {
-                !isLoading && data?.map(board => {
+                boardList.map(board => {
                     return (
-                        <div>{board.title}</div>
+                        <div key={board.seq}>
+                            <div>{board.title}</div>
+                            <div onClick={() => deleteBoard(board)}>delete</div>
+                            <div onClick={() => updateBoard(board)}>update</div>
+                        </div>
                     )
                 })
             }
         </>
-    ), [isLoading, data])
+    ), [loading, boardList])
 }
 
 export default BoardListItem;
