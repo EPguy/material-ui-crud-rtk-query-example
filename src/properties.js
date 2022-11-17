@@ -1,4 +1,4 @@
 
 export const properties = {
-    apiDomain : "http://localhost:8080/",
+    apiDomain : "http://localhost:8080/rtk/",
 };
