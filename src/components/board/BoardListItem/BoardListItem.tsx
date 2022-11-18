@@ -1,4 +1,4 @@
-import {useMemo} from "react";
+import {useCallback, useMemo} from "react";
 import useBoard from "../../../hooks/useBoard";
 import {
     Box, Button,
@@ -17,15 +17,15 @@ import useDialog from "../../../hooks/useDialog";
 import {Board} from "../../../models/Board";
 
 const BoardListItem = () => {
-    const { boardList, loading, deleteBoard, updateBoard } = useBoard();
+    const { boardList, deleteBoard, updateBoard } = useBoard();
     const { openDialog, closeDialog } = useDialog();
 
-    const doDeleteBoard = (board: Board) => {
+    const doDeleteBoard = useCallback((board: Board) => {
         openDialog((password) => {
             deleteBoard(board, password)
             closeDialog()
         });
-    }
+    },[closeDialog, deleteBoard, openDialog])
 
     return useMemo(() => (
         <Box sx={{ width: '100%' }}>
@@ -83,7 +83,7 @@ const BoardListItem = () => {
                 </TableContainer>
             </Paper>
         </Box>
-    ), [loading, boardList])
+    ), [boardList, updateBoard, doDeleteBoard])
 }
 
 export default BoardListItem;

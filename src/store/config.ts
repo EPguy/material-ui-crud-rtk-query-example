@@ -3,11 +3,13 @@ import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { createLogger } from 'redux-logger';
 import {BOARD_API_REDUCER_KEY, boardApi} from "../api/board/api";
 import dialogSlice from "./slices/dialogSlice";
+import alertSlice from "./slices/alertSlice";
 
 const logger = createLogger();
 
 const reducers = {
     [dialogSlice.name]: dialogSlice.reducer,
+    [alertSlice.name]: alertSlice.reducer,
     [BOARD_API_REDUCER_KEY]: boardApi.reducer,
 };
 

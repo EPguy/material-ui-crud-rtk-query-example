@@ -22,8 +22,7 @@ const dialogSlice = createSlice({
         close: (state) => {
             state.open = false
         }
-    },
-    extraReducers: {}
+    }
 })
 
 export const { open, close } = dialogSlice.actions;
