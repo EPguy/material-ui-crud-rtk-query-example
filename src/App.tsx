@@ -1,11 +1,10 @@
 import React from 'react';
-import BoardListItem from "./components/board/BoardListItem/BoardListItem";
+import {RouterProvider} from "react-router-dom";
+import Router from "./router/Router";
 
 function App() {
   return (
-    <div className="App">
-      <BoardListItem/>
-    </div>
+      <RouterProvider router={Router()} fallbackElement={<>Just Blank!</>}/>
   );
 }
 
