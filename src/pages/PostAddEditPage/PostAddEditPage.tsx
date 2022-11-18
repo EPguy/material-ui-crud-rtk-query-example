@@ -1,10 +1,13 @@
 import React from "react";
 import PostForm from "../../components/post/PostForm/PostForm";
+import {Container} from "@mui/material";
 
 const PostAddEditPage = ()  => {
     return (
         <>
-            <PostForm/>
+            <Container maxWidth="lg">
+                <PostForm/>
+            </Container>
         </>
     )
 }

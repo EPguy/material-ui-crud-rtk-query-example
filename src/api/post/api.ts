@@ -26,6 +26,16 @@ export const postApi = createApi({
             },
             providesTags: result => [{type: 'Post', id: result?.seq}]
         }),
+        insertPost: builder.mutation<Post, Post>({
+            query: (post) => {
+                return ({
+                    url: 'post',
+                    method: 'POST',
+                    data: post
+                })
+            },
+            invalidatesTags: result => ["Post", {type: "Post", id: result?.seq}]
+        }),
         deletePost: builder.mutation<Post, Post>({
             query: (post) => {
                 return ({
@@ -49,4 +59,4 @@ export const postApi = createApi({
     }),
 })
 
-export const { useGetPostListQuery, useGetPostQuery, useDeletePostMutation, useUpdatePostMutation } = postApi
+export const { useGetPostListQuery, useGetPostQuery, useInsertPostMutation, useDeletePostMutation, useUpdatePostMutation } = postApi

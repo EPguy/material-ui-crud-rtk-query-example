@@ -15,9 +15,18 @@ export default function useAlert() {
         }));
     },[dispatch])
 
+    const openFailAlert = useCallback((body: string) => {
+        dispatch(open({
+            type: AlertTypeEnum.ERROR,
+            title: "Error",
+            body,
+            open: true
+        }));
+    },[dispatch])
+
     const closeAlert = useCallback(() => {
         dispatch(close());
     },[dispatch])
 
-    return { openSuccessAlert, closeAlert }
+    return { openSuccessAlert, openFailAlert, closeAlert }
 }

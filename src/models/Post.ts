@@ -1,7 +1,7 @@
 export interface Post {
-    seq: number,
+    seq?: number,
     title: string,
     password: string,
     content: string,
-    createdDate: string
+    createdDate?: string
 }

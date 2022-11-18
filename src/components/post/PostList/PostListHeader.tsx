@@ -1,5 +1,5 @@
 import {Button, Toolbar, Typography} from "@mui/material";
-import {PostAdd} from "@mui/icons-material";
+import {Add} from "@mui/icons-material";
 import {useNavigate} from "react-router-dom";
 
 const PostListHeader = () => {
@@ -19,7 +19,7 @@ const PostListHeader = () => {
             >
                 RTK Query Example
             </Typography>
-            <Button variant="contained" color="success" startIcon={<PostAdd />} onClick={() => navigate("/post/add")}>
+            <Button variant="contained" color="success" startIcon={<Add />} onClick={() => navigate("/post/add")}>
                 Post
             </Button>
         </Toolbar>
