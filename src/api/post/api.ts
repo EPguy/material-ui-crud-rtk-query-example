@@ -15,29 +15,38 @@ export const postApi = createApi({
                     method: 'GET'
                 })
             },
-            providesTags: result => [{type: 'Post', id: 'List'}],
+            providesTags: result => [{type: 'Post', id: 'List'}]
         }),
-        deletePost: builder.mutation<null, {post: Post}>({
-            query: ({post}) => {
+        getPost: builder.query<Post, number>({
+            query: (seq) => {
+                return ({
+                    url: `post/${seq}`,
+                    method: 'GET'
+                })
+            },
+            providesTags: result => [{type: 'Post', id: result?.seq}]
+        }),
+        deletePost: builder.mutation<Post, Post>({
+            query: (post) => {
                 return ({
                     url: 'post',
                     method: 'DELETE',
                     data: post
                 })
             },
-            invalidatesTags: ["Post"],
+            invalidatesTags: result => ["Post", {type: "Post", id: result?.seq}]
         }),
-        updatePost: builder.mutation<null, {post: Post}>({
-            query: ({post}) => {
+        updatePost: builder.mutation<Post, Post>({
+            query: (post) => {
                 return ({
                     url: 'post',
                     method: 'PUT',
                     data: post
                 })
             },
-            invalidatesTags: ["Post"]
+            invalidatesTags: result => ["Post", {type: "Post", id: result?.seq}]
         })
     }),
 })
 
-export const { useGetPostListQuery, useDeletePostMutation, useUpdatePostMutation } = postApi
+export const { useGetPostListQuery, useGetPostQuery, useDeletePostMutation, useUpdatePostMutation } = postApi

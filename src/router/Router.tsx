@@ -3,6 +3,7 @@ import PasswordDialog from "../components/dialog/PasswordDialog/PasswordDialog";
 import React from "react";
 import {createBrowserRouter, Outlet} from "react-router-dom";
 import PostListPage from "../pages/PostListPage/PostListPage";
+import PostAddEditPage from "../pages/PostAddEditPage/PostAddEditPage";
 
 const Router = () => createBrowserRouter(
     [
@@ -17,8 +18,14 @@ const Router = () => createBrowserRouter(
                 index: true,
                 path: "/", element: <PostListPage/>
             }, {
-                index: true,
-                path: "/add", element: <PostListPage/>
+                path: "post", element: <Outlet/>, children: [
+                    {
+                        path: "add", element: <PostAddEditPage/>
+                    },
+                    {
+                        path: "edit/:seq", element: <PostAddEditPage/>
+                    }
+                ]
             }]
         }
     ],

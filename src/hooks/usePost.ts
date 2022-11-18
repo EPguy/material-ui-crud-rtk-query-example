@@ -1,21 +1,26 @@
 import {useCallback} from "react";
 import {Post} from "../models/Post";
 import {useDeletePostMutation, useGetPostListQuery, useUpdatePostMutation} from "../api/post/api";
+import useDialog from "./useDialog";
 
 export default function usePost() {
-    const { data: postList = [], isLoading: getPostLoading } = useGetPostListQuery(null)
+    const { openDialog, closeDialog } = useDialog();
+    const { data: postList = [], isLoading: getPostListLoading } = useGetPostListQuery(null)
     const [deletePostMutation, { isLoading: deletePostLoading }] = useDeletePostMutation()
     const [updatePostMutation, { isLoading: updatePostLoading }] = useUpdatePostMutation()
 
-    const loading = getPostLoading || deletePostLoading || updatePostLoading
+    const loading = getPostListLoading || deletePostLoading || updatePostLoading
 
-    const deletePost = useCallback((post: Post, password: string) => {
-        post = {
-            ...post,
-            password: password.toString()
-        }
-        deletePostMutation({post});
-    }, [deletePostMutation])
+    const deletePost = useCallback((post: Post) => {
+        openDialog((password) => {
+            post = {
+                ...post,
+                password: password.toString()
+            }
+            deletePostMutation(post);
+            closeDialog()
+        });
+    }, [deletePostMutation, closeDialog, openDialog])
 
     const updatePost = useCallback((post: Post) => {
         const title = prompt("Enter A TITLE TO UPDATE.");
@@ -27,7 +32,7 @@ export default function usePost() {
                 password: password.toString()
             }
         }
-        updatePostMutation({post});
+        updatePostMutation(post);
     }, [updatePostMutation])
 
     return { postList, loading, deletePost, updatePost }

@@ -1,4 +1,4 @@
-import {useCallback, useMemo} from "react";
+import {useMemo} from "react";
 import usePost from "../../../hooks/usePost";
 import {
     Box, Button,
@@ -9,52 +9,28 @@ import {
     TableContainer,
     TableHead,
     TableRow,
-    Toolbar,
-    Typography
 } from "@mui/material";
-import {Delete, Edit, PostAdd} from "@mui/icons-material";
-import useDialog from "../../../hooks/useDialog";
-import {Post} from "../../../models/Post";
+import {Delete, Edit} from "@mui/icons-material";
+import PostListHeader from "./PostListHeader";
+import {useNavigate} from "react-router-dom";
+
 
 const PostListItem = () => {
-    const { postList, deletePost, updatePost } = usePost();
-    const { openDialog, closeDialog } = useDialog();
-
-    const doDeletePost = useCallback((post: Post) => {
-        openDialog((password) => {
-            deletePost(post, password)
-            closeDialog()
-        });
-    },[closeDialog, deletePost, openDialog])
+    const { postList, deletePost } = usePost();
+    const navigate = useNavigate();
 
     return useMemo(() => (
         <Box sx={{ width: '100%' }}>
             <Paper sx={{ width: '100%', mb: 2 }}>
-                <Toolbar
-                    sx={{
-                        pl: { sm: 2 },
-                        pr: { xs: 1, sm: 1 },
-                    }}
-                >
-                    <Typography
-                        sx={{ flex: '1 1 100%' }}
-                        variant="h6"
-                        id="tableTitle"
-                        component="div"
-                    >
-                        RTK Query Example
-                    </Typography>
-                    <Button variant="contained" color="success" startIcon={<PostAdd />}>
-                        Post
-                    </Button>
-                </Toolbar>
+                <PostListHeader/>
                 <TableContainer component={Paper}>
                     <Table sx={{ minWidth: 650 }} aria-label="simple table">
                         <TableHead>
                             <TableRow>
                                 <TableCell width="5%">ID</TableCell>
                                 <TableCell width="20%" align="center">Title</TableCell>
-                                <TableCell width="60%" align="center">Content</TableCell>
+                                <TableCell width="50%" align="center">Content</TableCell>
+                                <TableCell width="10%" align="center">Created</TableCell>
                                 <TableCell width="15%" align="center">Actions</TableCell>
                             </TableRow>
                         </TableHead>
@@ -69,12 +45,13 @@ const PostListItem = () => {
                                         {post.title}
                                     </TableCell>
                                     <TableCell align="center" width="60%">{post.content}</TableCell>
+                                    <TableCell align="center" width="60%">{post.createdDate}</TableCell>
                                     <TableCell align="center" width="15%">
                                         <Stack direction="row" justifyContent="center" spacing={1}>
-                                            <Button size="small" variant="outlined" startIcon={<Edit />} onClick={() => updatePost(post)}>
+                                            <Button size="small" variant="outlined" startIcon={<Edit />} onClick={() => navigate(`/post/edit/${post.seq}`)}>
                                                 Edit
                                             </Button>
-                                            <Button size="small" color="error" variant="outlined" startIcon={<Delete />}  onClick={() => doDeletePost(post)}>
+                                            <Button size="small" color="error" variant="outlined" startIcon={<Delete />}  onClick={() => deletePost(post)}>
                                                 Delete
                                             </Button>
                                         </Stack>
@@ -86,7 +63,7 @@ const PostListItem = () => {
                 </TableContainer>
             </Paper>
         </Box>
-    ), [postList, updatePost, doDeletePost])
+    ), [postList, deletePost, navigate])
 }
 
 export default PostListItem;

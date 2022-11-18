@@ -1,5 +1,5 @@
 import React from "react";
-import PostListItem from "../../components/post/PostListItem/PostListItem";
+import PostListItem from "../../components/post/PostList/PostListItem";
 
 const PostListPage = ()  => {
     return (
