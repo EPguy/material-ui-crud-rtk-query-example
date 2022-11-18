@@ -1,5 +1,5 @@
 import {useCallback, useMemo} from "react";
-import useBoard from "../../../hooks/useBoard";
+import usePost from "../../../hooks/usePost";
 import {
     Box, Button,
     Paper, Stack,
@@ -14,18 +14,18 @@ import {
 } from "@mui/material";
 import {Delete, Edit, PostAdd} from "@mui/icons-material";
 import useDialog from "../../../hooks/useDialog";
-import {Board} from "../../../models/Board";
+import {Post} from "../../../models/Post";
 
-const BoardListItem = () => {
-    const { boardList, deleteBoard, updateBoard } = useBoard();
+const PostListItem = () => {
+    const { postList, deletePost, updatePost } = usePost();
     const { openDialog, closeDialog } = useDialog();
 
-    const doDeleteBoard = useCallback((board: Board) => {
+    const doDeletePost = useCallback((post: Post) => {
         openDialog((password) => {
-            deleteBoard(board, password)
+            deletePost(post, password)
             closeDialog()
         });
-    },[closeDialog, deleteBoard, openDialog])
+    },[closeDialog, deletePost, openDialog])
 
     return useMemo(() => (
         <Box sx={{ width: '100%' }}>
@@ -59,22 +59,22 @@ const BoardListItem = () => {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {boardList.map((board) => (
+                            {postList.map((post) => (
                                 <TableRow
-                                    key={board.seq}
+                                    key={post.seq}
                                     sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                 >
-                                    <TableCell component="th" width="5%" scope="row">{board.seq}</TableCell>
+                                    <TableCell component="th" width="5%" scope="row">{post.seq}</TableCell>
                                     <TableCell component="th"  width="20%" scope="row" align="center">
-                                        {board.title}
+                                        {post.title}
                                     </TableCell>
-                                    <TableCell align="center" width="60%">{board.content}</TableCell>
+                                    <TableCell align="center" width="60%">{post.content}</TableCell>
                                     <TableCell align="center" width="15%">
                                         <Stack direction="row" justifyContent="center" spacing={1}>
-                                            <Button size="small" variant="outlined" startIcon={<Edit />} onClick={() => updateBoard(board)}>
+                                            <Button size="small" variant="outlined" startIcon={<Edit />} onClick={() => updatePost(post)}>
                                                 Edit
                                             </Button>
-                                            <Button size="small" color="error" variant="outlined" startIcon={<Delete />}  onClick={() => doDeleteBoard(board)}>
+                                            <Button size="small" color="error" variant="outlined" startIcon={<Delete />}  onClick={() => doDeletePost(post)}>
                                                 Delete
                                             </Button>
                                         </Stack>
@@ -86,7 +86,7 @@ const BoardListItem = () => {
                 </TableContainer>
             </Paper>
         </Box>
-    ), [boardList, updateBoard, doDeleteBoard])
+    ), [postList, updatePost, doDeletePost])
 }
 
-export default BoardListItem;
+export default PostListItem;

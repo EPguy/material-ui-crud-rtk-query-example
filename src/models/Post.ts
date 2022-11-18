@@ -1,4 +1,4 @@
-export interface Board {
+export interface Post {
     seq: number,
     title: string,
     password: string,

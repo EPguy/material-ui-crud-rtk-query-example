@@ -2,7 +2,7 @@ import DescriptionAlert from "../components/alert/DescriptionAlert/DescriptionAl
 import PasswordDialog from "../components/dialog/PasswordDialog/PasswordDialog";
 import React from "react";
 import {createBrowserRouter, Outlet} from "react-router-dom";
-import BoardListPage from "../pages/BoardListPage/BoardListPage";
+import PostListPage from "../pages/PostListPage/PostListPage";
 
 const Router = () => createBrowserRouter(
     [
@@ -15,7 +15,10 @@ const Router = () => createBrowserRouter(
             </>,
             children: [{
                 index: true,
-                path: "/", element: <BoardListPage/>
+                path: "/", element: <PostListPage/>
+            }, {
+                index: true,
+                path: "/add", element: <PostListPage/>
             }]
         }
     ],

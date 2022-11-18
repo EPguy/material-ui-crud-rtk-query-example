@@ -1,10 +1,10 @@
 import React from "react";
-import BoardListItem from "../../components/board/BoardListItem/BoardListItem";
+import PostListItem from "../../components/post/PostListItem/PostListItem";
 
 const PostListPage = ()  => {
     return (
         <>
-            <BoardListItem/>
+            <PostListItem/>
         </>
     )
 }

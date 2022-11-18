@@ -1,7 +1,7 @@
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { createLogger } from 'redux-logger';
-import {BOARD_API_REDUCER_KEY, boardApi} from "../api/board/api";
+import {POST_API_REDUCER_KEY, postApi} from "../api/post/api";
 import dialogSlice from "./slices/dialogSlice";
 import alertSlice from "./slices/alertSlice";
 
@@ -10,7 +10,7 @@ const logger = createLogger();
 const reducers = {
     [dialogSlice.name]: dialogSlice.reducer,
     [alertSlice.name]: alertSlice.reducer,
-    [BOARD_API_REDUCER_KEY]: boardApi.reducer,
+    [POST_API_REDUCER_KEY]: postApi.reducer,
 };
 
 const rootReducer = combineReducers<typeof reducers>(reducers);
@@ -24,7 +24,7 @@ export const store = configureStore({
             serializableCheck: false
         }).concat([
             logger,
-            boardApi.middleware
+            postApi.middleware
         ]);
     },
     devTools: process.env.NODE_ENV !== 'production',
