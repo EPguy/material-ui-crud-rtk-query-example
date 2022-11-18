@@ -12,7 +12,7 @@ import {
     Toolbar,
     Typography
 } from "@mui/material";
-import {Delete, Edit} from "@mui/icons-material";
+import {Delete, Edit, PostAdd} from "@mui/icons-material";
 import useDialog from "../../../hooks/useDialog";
 import {Board} from "../../../models/Board";
 
@@ -44,6 +44,9 @@ const BoardListItem = () => {
                     >
                         RTK Query Example
                     </Typography>
+                    <Button variant="contained" color="success" startIcon={<PostAdd />}>
+                        Post
+                    </Button>
                 </Toolbar>
                 <TableContainer component={Paper}>
                     <Table sx={{ minWidth: 650 }} aria-label="simple table">

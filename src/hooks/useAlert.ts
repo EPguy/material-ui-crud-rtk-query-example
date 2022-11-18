@@ -1,14 +1,15 @@
 import {useAppDispatch} from "../store/config";
-import {open, close} from "../store/slices/alertSlice";
+import {close, open} from "../store/slices/alertSlice";
 import {useCallback} from "react";
 import {AlertTypeEnum} from "../enum/AlertTypeEnum";
+
 export default function useAlert() {
     const dispatch = useAppDispatch();
 
-    const openAlert = useCallback((type: AlertTypeEnum, title: string, body: string) => {
+    const openSuccessAlert = useCallback((body: string) => {
         dispatch(open({
-            type,
-            title,
+            type: AlertTypeEnum.SUCCESS,
+            title: "Success",
             body,
             open: true
         }));
@@ -18,5 +19,5 @@ export default function useAlert() {
         dispatch(close());
     },[dispatch])
 
-    return { openAlert, closeAlert }
+    return { openSuccessAlert, closeAlert }
 }
