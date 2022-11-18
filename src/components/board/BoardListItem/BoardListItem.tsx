@@ -13,9 +13,20 @@ import {
     Typography
 } from "@mui/material";
 import {Delete, Edit} from "@mui/icons-material";
+import useDialog from "../../../hooks/useDialog";
+import {Board} from "../../../models/Board";
 
 const BoardListItem = () => {
     const { boardList, loading, deleteBoard, updateBoard } = useBoard();
+    const { openDialog, closeDialog } = useDialog();
+
+    const doDeleteBoard = (board: Board) => {
+        openDialog((password) => {
+            deleteBoard(board, password)
+            closeDialog()
+        });
+    }
+
     return useMemo(() => (
         <Box sx={{ width: '100%' }}>
             <Paper sx={{ width: '100%', mb: 2 }}>
@@ -60,7 +71,7 @@ const BoardListItem = () => {
                                             <Button size="small" variant="outlined" startIcon={<Edit />} onClick={() => updateBoard(board)}>
                                                 Edit
                                             </Button>
-                                            <Button size="small" variant="outlined" startIcon={<Delete />}  onClick={() => deleteBoard(board)}>
+                                            <Button size="small" color="error" variant="outlined" startIcon={<Delete />}  onClick={() => doDeleteBoard(board)}>
                                                 Delete
                                             </Button>
                                         </Stack>

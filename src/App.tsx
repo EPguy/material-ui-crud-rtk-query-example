@@ -1,5 +1,6 @@
 import React from 'react';
 import BoardListItem from "./components/board/BoardListItem/BoardListItem";
+import PasswordDialog from "./components/dialog/PasswordDialog/PasswordDialog";
 
 function App() {
   return (

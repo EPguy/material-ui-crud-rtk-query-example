@@ -1,7 +1,6 @@
 import {useCallback} from "react";
 import {Board} from "../models/Board";
 import {useDeleteBoardMutation, useGetBoardListQuery, useUpdateBoardMutation} from "../api/board/api";
-import axios from "axios";
 
 export default function useBoard() {
     const { data: boardList = [], isLoading: getBoardLoading } = useGetBoardListQuery(null)
@@ -10,13 +9,10 @@ export default function useBoard() {
 
     const loading = getBoardLoading || deleteBoardLoading || updateBoardLoading
 
-    const deleteBoard = useCallback((board: Board) => {
-        const password = prompt("Enter Password.");
-        if(password !== null) {
-            board = {
-                ...board,
-                password: password.toString()
-            }
+    const deleteBoard = useCallback((board: Board, password: string) => {
+        board = {
+            ...board,
+            password: password.toString()
         }
         deleteBoardMutation({board});
     }, [deleteBoardMutation])

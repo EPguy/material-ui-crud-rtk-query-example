@@ -2,19 +2,25 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { createLogger } from 'redux-logger';
 import {BOARD_API_REDUCER_KEY, boardApi} from "../api/board/api";
+import dialogSlice from "./slices/dialogSlice";
 
 const logger = createLogger();
 
-const rootReducer = combineReducers({
-    [BOARD_API_REDUCER_KEY]: boardApi.reducer
-});
+const reducers = {
+    [dialogSlice.name]: dialogSlice.reducer,
+    [BOARD_API_REDUCER_KEY]: boardApi.reducer,
+};
+
+const rootReducer = combineReducers<typeof reducers>(reducers);
 
 const initialState = {};
 
 export const store = configureStore({
     reducer: rootReducer,
     middleware: (getDefaultMiddleware) => {
-        return getDefaultMiddleware().concat([
+        return getDefaultMiddleware({
+            serializableCheck: false
+        }).concat([
             logger,
             boardApi.middleware
         ]);
@@ -24,7 +30,7 @@ export const store = configureStore({
     enhancers: (defaultEnhancers) => [...defaultEnhancers]
 });
 
-export type RootState = ReturnType<typeof store.getState>;
+export type RootState = ReturnType<typeof rootReducer>;
 export type AppDispatch = typeof store.dispatch;
 
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
