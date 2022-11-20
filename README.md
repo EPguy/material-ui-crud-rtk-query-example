@@ -1,9 +1,10 @@
 # typescript-rtk-query-material-ui-crud-example
 
-This is CRUD project using `Redux Toolkit`, `TypeScript`, `Material-UI`.
+This is CRUD project using `Redux Toolkit`, `TypeScript`, `Material-UI`.\
+Also, It implements `Pagination`, `Dialog`, `Alert`.
 
-이 프로젝트는 `Redux Toolkit`, `TypeScript`, `Material-UI`를 이용한 CRUD 프로젝트입니다.
-
+이 프로젝트는 `Redux Toolkit`, `TypeScript`, `Material-UI`를 이용한 CRUD 프로젝트입니다.\
+또한 `Pagination`, `Dialog`, `Alert` 기능도 구현되어있습니다.
 
 
 ## Screenshot
