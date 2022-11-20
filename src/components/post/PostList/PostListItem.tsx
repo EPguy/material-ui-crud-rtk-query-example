@@ -43,6 +43,8 @@ const PostListItem = () => {
                         <TableBody >
                             {postList.posts.map((post) => (
                                 <TableRow
+                                    hover={true}
+                                    sx={{cursor: "pointer"}}
                                     key={post.seq}
                                 >
                                     <TableCell component="th" width="5%" scope="row">{post.seq}</TableCell>
