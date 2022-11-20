@@ -1,4 +1,4 @@
-import {useMemo} from "react";
+import {useEffect, useMemo} from "react";
 import usePost from "../../../hooks/usePost";
 import {
     Box, Button,
@@ -7,24 +7,29 @@ import {
     TableBody,
     TableCell,
     TableContainer,
-    TableHead, TablePagination,
+    TableHead,
     TableRow,
 } from "@mui/material";
 import {Delete, Edit} from "@mui/icons-material";
 import PostListHeader from "./PostListHeader";
 import {useNavigate} from "react-router-dom";
 import PostListPagination from "./PostListPagination";
+import {useAppSelector} from "../../../store/config";
 
 
 const PostListItem = () => {
+    const { page, rowsPerPage } = useAppSelector(state => state.pagination)
     const { postList, deletePost } = usePost();
     const navigate = useNavigate();
+
+    useEffect(() => {
+    },[page, rowsPerPage, postList])
 
     return useMemo(() => (
         <Box sx={{ width: '100%' }}>
             <Paper sx={{ width: '100%', mb: 2 }}>
                 <PostListHeader/>
-                <TableContainer component={Paper}>
+                <TableContainer>
                     <Table sx={{ minWidth: 650 }} aria-label="simple table">
                         <TableHead>
                             <TableRow>
@@ -58,13 +63,13 @@ const PostListItem = () => {
                                     </TableCell>
                                 </TableRow>
                             ))}
+                            <PostListPagination totalCount={postList.count} page={page} rowsPerPage={rowsPerPage}/>
                         </TableBody>
                     </Table>
-                    <PostListPagination totalCount={postList.count}/>
                 </TableContainer>
             </Paper>
         </Box>
-    ), [postList, deletePost, navigate])
+    ), [postList, deletePost, navigate, page, rowsPerPage])
 }
 
 export default PostListItem;
