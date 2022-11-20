@@ -1,6 +1,6 @@
 # typescript-rtk-query-material-ui-crud-example
 
-This is CRUD project for  using `Redux Toolkit`, `TypeScript`, `Material-UI`.
+This is CRUD project using `Redux Toolkit`, `TypeScript`, `Material-UI`.
 
 이 프로젝트는 `Redux Toolkit`, `TypeScript`, `Material-UI`를 이용한 CRUD 프로젝트입니다.
 
