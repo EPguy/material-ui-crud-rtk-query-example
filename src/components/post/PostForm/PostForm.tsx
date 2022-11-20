@@ -69,7 +69,7 @@ const PostForm = ()  => {
                 password: formValue.password
             })
         }
-    },[formValue, insertPost, navigate, validate])
+    },[formValue, insertPost, validate])
 
     const onEditClick = useCallback(async () => {
         if(validate()) {
@@ -80,7 +80,7 @@ const PostForm = ()  => {
                 password: formValue.password
             })
         }
-    },[formValue, navigate, updatePost, validate])
+    },[formValue, updatePost, validate])
 
     return (
         <>

@@ -4,12 +4,14 @@ import { createLogger } from 'redux-logger';
 import {POST_API_REDUCER_KEY, postApi} from "../api/post/api";
 import dialogSlice from "./slices/dialogSlice";
 import alertSlice from "./slices/alertSlice";
+import paginationSlice from "./slices/paginationSlice";
 
 const logger = createLogger();
 
 const reducers = {
     [dialogSlice.name]: dialogSlice.reducer,
     [alertSlice.name]: alertSlice.reducer,
+    [paginationSlice.name]: paginationSlice.reducer,
     [POST_API_REDUCER_KEY]: postApi.reducer,
 };
 

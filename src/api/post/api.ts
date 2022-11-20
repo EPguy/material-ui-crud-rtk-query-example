@@ -1,6 +1,7 @@
 import { createApi } from '@reduxjs/toolkit/query/react'
 import {Post} from "../../models/Post";
 import {axiosBaseQuery} from "../axiosBaseQuery";
+import {PostListResponse} from "../../models/response/PostListResponse";
 
 export const POST_API_REDUCER_KEY = 'postApi';
 export const postApi = createApi({
@@ -8,10 +9,10 @@ export const postApi = createApi({
     baseQuery: axiosBaseQuery(),
     tagTypes: ['Post'],
     endpoints: (builder) => ({
-        getPostList: builder.query<Post[], null>({
-            query: () => {
+        getPostList: builder.query<PostListResponse, {page: number, rowsPerPage: number}>({
+            query: ({page, rowsPerPage}) => {
                 return ({
-                    url: 'post',
+                    url: `post?page=${page}&rowsPerPage=${rowsPerPage}`,
                     method: 'GET'
                 })
             },

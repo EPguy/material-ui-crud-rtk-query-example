@@ -3,13 +3,18 @@ import {Post} from "../models/Post";
 import {useDeletePostMutation, useGetPostListQuery, useInsertPostMutation, useUpdatePostMutation} from "../api/post/api";
 import useDialog from "./useDialog";
 import {useNavigate} from "react-router-dom";
+import {useAppSelector} from "../store/config";
 
 export default function usePost() {
 
     const navigate = useNavigate()
     const { openDialog, closeDialog } = useDialog();
+    const { page, rowsPerPage } = useAppSelector(state => state.pagination)
 
-    const { data: postList = [], isLoading: getPostListLoading } = useGetPostListQuery(null)
+    const { data: postList = {
+        posts: [],
+        count: 0
+    }, isLoading: getPostListLoading } = useGetPostListQuery({page, rowsPerPage})
     const [insertPostMutation, { isLoading: insertPostLoading }] = useInsertPostMutation()
     const [deletePostMutation, { isLoading: deletePostLoading }] = useDeletePostMutation()
     const [updatePostMutation, { isLoading: updatePostLoading }] = useUpdatePostMutation()
@@ -22,7 +27,7 @@ export default function usePost() {
             // if insert usccess
             navigate('/')
         }
-    }, [insertPostMutation])
+    }, [insertPostMutation, navigate])
 
     const deletePost = useCallback((post: Post) => {
         openDialog((password) => {
@@ -41,7 +46,7 @@ export default function usePost() {
             //if update success
             navigate('/')
         }
-    }, [updatePostMutation])
+    }, [updatePostMutation, navigate])
 
     return { postList, loading, deletePost, updatePost, insertPost }
 }

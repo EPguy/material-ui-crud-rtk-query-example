@@ -7,12 +7,13 @@ import {
     TableBody,
     TableCell,
     TableContainer,
-    TableHead,
+    TableHead, TablePagination,
     TableRow,
 } from "@mui/material";
 import {Delete, Edit} from "@mui/icons-material";
 import PostListHeader from "./PostListHeader";
 import {useNavigate} from "react-router-dom";
+import PostListPagination from "./PostListPagination";
 
 
 const PostListItem = () => {
@@ -34,11 +35,10 @@ const PostListItem = () => {
                                 <TableCell width="15%" align="center">Actions</TableCell>
                             </TableRow>
                         </TableHead>
-                        <TableBody>
-                            {postList.map((post) => (
+                        <TableBody >
+                            {postList.posts.map((post) => (
                                 <TableRow
                                     key={post.seq}
-                                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                 >
                                     <TableCell component="th" width="5%" scope="row">{post.seq}</TableCell>
                                     <TableCell component="th"  width="20%" scope="row" align="center">
@@ -60,6 +60,7 @@ const PostListItem = () => {
                             ))}
                         </TableBody>
                     </Table>
+                    <PostListPagination totalCount={postList.count}/>
                 </TableContainer>
             </Paper>
         </Box>
