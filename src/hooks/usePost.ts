@@ -2,9 +2,11 @@ import {useCallback} from "react";
 import {Post} from "../models/Post";
 import {useDeletePostMutation, useGetPostListQuery, useInsertPostMutation, useUpdatePostMutation} from "../api/post/api";
 import useDialog from "./useDialog";
+import {useNavigate} from "react-router-dom";
 
 export default function usePost() {
 
+    const navigate = useNavigate()
     const { openDialog, closeDialog } = useDialog();
 
     const { data: postList = [], isLoading: getPostListLoading } = useGetPostListQuery(null)
@@ -14,8 +16,12 @@ export default function usePost() {
 
     const loading = getPostListLoading || deletePostLoading || updatePostLoading || insertPostLoading
 
-    const insertPost = useCallback((post: Post) => {
-        insertPostMutation(post)
+    const insertPost = useCallback(async (post: Post) => {
+        const data = await insertPostMutation(post).unwrap()
+        if(data != null) {
+            // if insert usccess
+            navigate('/')
+        }
     }, [insertPostMutation])
 
     const deletePost = useCallback((post: Post) => {
@@ -29,17 +35,12 @@ export default function usePost() {
         });
     }, [deletePostMutation, closeDialog, openDialog])
 
-    const updatePost = useCallback((post: Post) => {
-        const title = prompt("Enter A TITLE TO UPDATE.");
-        const password = prompt("Enter Password.");
-        if(title !== null && password != null) {
-            post = {
-                ...post,
-                title: title.toString(),
-                password: password.toString()
-            }
+    const updatePost = useCallback(async (post: Post) => {
+        const data = await updatePostMutation(post).unwrap();
+        if(data != null) {
+            //if update success
+            navigate('/')
         }
-        updatePostMutation(post);
     }, [updatePostMutation])
 
     return { postList, loading, deletePost, updatePost, insertPost }

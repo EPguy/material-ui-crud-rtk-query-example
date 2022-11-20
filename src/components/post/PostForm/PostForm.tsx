@@ -6,6 +6,7 @@ import usePost from "../../../hooks/usePost";
 import useAlert from "../../../hooks/useAlert";
 
 const initialFormState = {
+    seq: 0,
     title: "",
     content: "",
     password: "",
@@ -22,16 +23,18 @@ const PostForm = ()  => {
     const [inputError, setInputError] = useState(initialInputErrorState)
     const [editMode, setEditMode] = useState(false)
     const { seq } = useParams();
-    const { insertPost } = usePost();
+    const { insertPost, updatePost } = usePost();
     const { openFailAlert } = useAlert();
     const seqNumber = seq ? Number(seq) : 0
     const navigate = useNavigate()
+
     const { data } = useGetPostQuery(seqNumber)
 
     useEffect(() => {
         if(seq && data) {
             setEditMode(true)
             setFormValue({
+                seq: data.seq!,
                 title: data.title,
                 content: data.content,
                 password: ""
@@ -39,7 +42,8 @@ const PostForm = ()  => {
         }
     }, [data, seq])
 
-    const onAddClick = useCallback(async () => {
+    const validate = useCallback((): boolean => {
+        let isSuccess = false;
         setInputError({
             title: formValue.title.trim() === "",
             content: formValue.content.trim() === "",
@@ -52,10 +56,31 @@ const PostForm = ()  => {
         } else if(formValue.password.trim() === "") {
             openFailAlert("Please enter the password.");
         } else {
-            await insertPost({title: formValue.title, content: formValue.content, password: formValue.password})
-            navigate('/')
+            isSuccess = true
         }
-    },[formValue])
+        return isSuccess
+    }, [setInputError, formValue, openFailAlert])
+
+    const onAddClick = useCallback(async () => {
+        if(validate()) {
+            await insertPost({
+                title: formValue.title,
+                content: formValue.content,
+                password: formValue.password
+            })
+        }
+    },[formValue, insertPost, navigate, validate])
+
+    const onEditClick = useCallback(async () => {
+        if(validate()) {
+            await updatePost({
+                seq: formValue.seq,
+                title: formValue.title,
+                content: formValue.content,
+                password: formValue.password
+            })
+        }
+    },[formValue, navigate, updatePost, validate])
 
     return (
         <>
@@ -101,9 +126,13 @@ const PostForm = ()  => {
                        <Button size="medium" variant="contained" onClick={() => navigate(`/`)} color="secondary">
                            Back
                        </Button>
-                       <Button size="medium"  variant="contained" color="success" onClick={() => onAddClick()}>
-                           Add
-                       </Button>
+                       {
+                           editMode ? (<Button size="medium"  variant="contained" color="success" onClick={() => onEditClick()}>
+                               Edit
+                           </Button>) : (<Button size="medium"  variant="contained" color="success" onClick={() => onAddClick()}>
+                               Add
+                           </Button>)
+                       }
                    </Stack>
                </Stack>
            </Paper>
