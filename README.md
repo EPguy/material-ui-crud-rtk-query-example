@@ -6,7 +6,7 @@ Also, It implements `Pagination`, `Dialog`, `Alert`.
 이 프로젝트는 `Redux Toolkit`, `TypeScript`, `Material-UI`를 이용한 CRUD 프로젝트입니다.\
 또한, `Pagination`, `Dialog`, `Alert` 기능도 구현되어있습니다.
 
-![main](https://user-images.githubusercontent.com/36794920/203033120-a70b863a-82b4-44e9-aead-b8a6ab244520.gif)
+![main](https://user-images.githubusercontent.com/36794920/203079560-1fbf2a92-d22f-42fb-b354-9b38ceaea1fb.gif)
 
 ## Demo 
 [Demo](http://epguytest.xyz:5001)
