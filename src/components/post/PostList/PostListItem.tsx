@@ -69,7 +69,7 @@ const PostListItem = () => {
                                         {post.title}
                                     </TableCell>
                                     <TableCell align="center" width="60%">{post.content}</TableCell>
-                                    <TableCell align="center" width="60%">{post.createdDate}</TableCell>
+                                    <TableCell align="center" width="60%">{post.createdDate?.replace("T", " ")}</TableCell>
                                     <TableCell align="center" width="15%">
                                         <Stack direction="row" justifyContent="center" spacing={1}>
                                             <Button size="small" variant="outlined" startIcon={<Edit />} onClick={(e) => onEditPost(e, post)}>
