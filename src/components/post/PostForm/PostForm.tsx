@@ -123,13 +123,13 @@ const PostForm = ()  => {
                        helperText={inputError.password ? "Require." : ""}
                    />
                    <Stack direction="row" spacing={1}>
-                       <Button size="medium" variant="contained" onClick={() => navigate(`/`)} color="secondary">
+                       <Button size="medium" variant="contained" onClick={() => navigate(`/`)} color="inherit">
                            Back
                        </Button>
                        {
-                           editMode ? (<Button size="medium"  variant="contained" color="success" onClick={() => onEditClick()}>
+                           editMode ? (<Button size="medium"  variant="contained" color="primary" onClick={() => onEditClick()}>
                                Edit
-                           </Button>) : (<Button size="medium"  variant="contained" color="success" onClick={() => onAddClick()}>
+                           </Button>) : (<Button size="medium"  variant="contained" color="primary" onClick={() => onAddClick()}>
                                Add
                            </Button>)
                        }

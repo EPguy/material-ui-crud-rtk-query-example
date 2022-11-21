@@ -1,4 +1,4 @@
-import {useEffect, useMemo} from "react";
+import {useCallback, useEffect, useMemo} from "react";
 import usePost from "../../../hooks/usePost";
 import {
     Box, Button,
@@ -15,6 +15,7 @@ import PostListHeader from "./PostListHeader";
 import {useNavigate} from "react-router-dom";
 import PostListPagination from "./PostListPagination";
 import {useAppSelector} from "../../../store/config";
+import {Post} from "../../../models/Post";
 
 
 const PostListItem = () => {
@@ -24,6 +25,21 @@ const PostListItem = () => {
 
     useEffect(() => {
     },[page, rowsPerPage, postList])
+
+    const onClickPost = useCallback((post: Post) => {
+        navigate(`/post/detail/${post.seq}`)
+    },[navigate])
+
+    const onEditPost = useCallback((e: any, post: Post) => {
+        e.stopPropagation()
+        navigate(`/post/edit/${post.seq}`)
+    },[navigate])
+
+    const onDeletePost = useCallback((e: any, post: Post) => {
+        e.stopPropagation()
+        deletePost(post)
+    },[deletePost])
+
 
     return useMemo(() => (
         <Box sx={{ width: '100%' }}>
@@ -40,12 +56,13 @@ const PostListItem = () => {
                                 <TableCell width="15%" align="center">Actions</TableCell>
                             </TableRow>
                         </TableHead>
-                        <TableBody >
+                        <TableBody>
                             {postList.posts.map((post) => (
                                 <TableRow
                                     hover={true}
                                     sx={{cursor: "pointer"}}
                                     key={post.seq}
+                                    onClick={() => onClickPost(post)}
                                 >
                                     <TableCell component="th" width="5%" scope="row">{post.seq}</TableCell>
                                     <TableCell component="th"  width="20%" scope="row" align="center">
@@ -55,10 +72,10 @@ const PostListItem = () => {
                                     <TableCell align="center" width="60%">{post.createdDate}</TableCell>
                                     <TableCell align="center" width="15%">
                                         <Stack direction="row" justifyContent="center" spacing={1}>
-                                            <Button size="small" variant="outlined" startIcon={<Edit />} onClick={() => navigate(`/post/edit/${post.seq}`)}>
+                                            <Button size="small" variant="outlined" startIcon={<Edit />} onClick={(e) => onEditPost(e, post)}>
                                                 Edit
                                             </Button>
-                                            <Button size="small" color="error" variant="outlined" startIcon={<Delete />}  onClick={() => deletePost(post)}>
+                                            <Button size="small" color="error" variant="outlined" startIcon={<Delete />}  onClick={(e) => onDeletePost(e, post)}>
                                                 Delete
                                             </Button>
                                         </Stack>
@@ -71,7 +88,7 @@ const PostListItem = () => {
                 </TableContainer>
             </Paper>
         </Box>
-    ), [postList, deletePost, navigate, page, rowsPerPage])
+    ), [postList, page, rowsPerPage, onClickPost, onDeletePost, onEditPost])
 }
 
 export default PostListItem;

@@ -4,6 +4,7 @@ import React from "react";
 import {createBrowserRouter, Outlet} from "react-router-dom";
 import PostListPage from "../pages/PostListPage/PostListPage";
 import PostAddEditPage from "../pages/PostAddEditPage/PostAddEditPage";
+import PostDetailPage from "../pages/PostDetailPage/PostDetailPage";
 
 const Router = () => createBrowserRouter(
     [
@@ -24,6 +25,9 @@ const Router = () => createBrowserRouter(
                     },
                     {
                         path: "edit/:seq", element: <PostAddEditPage/>
+                    },
+                    {
+                        path: "detail/:seq", element: <PostDetailPage/>
                     }
                 ]
             }]
