@@ -14,7 +14,7 @@ const PasswordDialog = () => {
                <DialogTitle>Confirm Password</DialogTitle>
                <DialogContent>
                    <DialogContentText>
-                       Pleaseasd enter the password you used to create this post.
+                       Please enter the password you used to create this post.
                    </DialogContentText>
                    <TextField
                        autoFocus={true}
